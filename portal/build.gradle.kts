@@ -29,6 +29,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -42,11 +48,36 @@ afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                groupId = "io.jitpack"
-                artifactId = "library"
-                version = "1.0"
+                groupId = "com.github.SomnioNocte"
+                artifactId = "portal"
+                version = "0.1.0"
 
-                from(components.getByName("release"))
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    extension = "aar"
+                }
+
+                val classesJarFile = file("${buildDir}/intermediates/aar_main_jar/release/classes.jar")
+                if (classesJarFile.exists()) {
+                    artifact(classesJarFile) {
+
+                    }
+                } else {
+                    logger.warn("Classes JAR not found at ${classesJarFile.absolutePath}")
+                }
+
+                artifact(tasks.named("releaseSourcesJar")) {
+                    classifier = "sources"
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/${project.group.toString().substringAfter("com.github.")}/${project.name}")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
     }
