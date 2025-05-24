@@ -45,6 +45,10 @@ dependencies {
 }
 
 afterEvaluate {
+    val assembleReleaseTask = tasks.named("assembleRelease")
+
+    val releaseSourcesJarTask = tasks.named("releaseSourcesJar")
+
     publishing {
         publications {
             create<MavenPublication>("release") {
@@ -52,20 +56,22 @@ afterEvaluate {
                 artifactId = "portal"
                 version = "0.1.0"
 
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                artifact(assembleReleaseTask)
+
+                artifact("${layout.buildDirectory}/outputs/aar/${project.name}-release.aar") {
                     extension = "aar"
                 }
 
-                val classesJarFile = file("${buildDir}/intermediates/aar_main_jar/release/classes.jar")
+                val classesJarFile = file("${layout.buildDirectory}/intermediates/aar_main_jar/release/classes.jar")
                 if (classesJarFile.exists()) {
                     artifact(classesJarFile) {
-
+                        builtBy(assembleReleaseTask)
                     }
                 } else {
-                    logger.warn("Classes JAR not found at ${classesJarFile.absolutePath}")
+                    logger.warn("Classes JAR not found at ${classesJarFile.absolutePath}. It might be empty or not generated yet.")
                 }
 
-                artifact(tasks.named("releaseSourcesJar")) {
+                artifact(releaseSourcesJarTask) {
                     classifier = "sources"
                 }
             }
