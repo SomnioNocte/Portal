@@ -1,3 +1,5 @@
+# Portal
+
 Declaratively displays content on top of the main UI hierarchy.
 
 Portal is a low-level API for building any components that should be displayed on top of the main interface, for example: modal window, dialog, color picker, date and time picker, etc.
@@ -9,25 +11,23 @@ In most cases, it is recommended to make a component that conforms to your desig
 You can also use BasicModalView, BasicDialog if it meets your requirements or use their source code as a starting point to write your own (it's easy).
 
 ``` Kotlin
-Scaffold {
-    var showModalView by rememberSaveable { mutableStateOf(false) }
+var showModalView by rememberSaveable { mutableStateOf(false) }
 
-    if (showModalView) BasicModalView(
-        onCloseRequest = { showModalView = false }
-    ) {
-        Surface {
-            Text(
-                "Press the outside of the modal view to close it.",
-                Modifier.fillMaxWidth().padding(82.dp),
-                textAlign = TextAlign.Center
-            )
-        }
+if (showModalView) BasicModalView(
+    onCloseRequest = { showModalView = false }
+) {
+    Surface {
+        Text(
+            "Press the outside of the modal view to close it.",
+            Modifier.fillMaxWidth().padding(82.dp),
+            textAlign = TextAlign.Center
+        )
     }
+}
 
-    Column(Modifier.fillMaxSize()) {
-        FilledTonalButton({ showModalView = true }) {
-            Text("Show modal view")
-        }
+Column(Modifier.fillMaxSize()) {
+    FilledTonalButton({ showModalView = true }) {
+        Text("Show modal view")
     }
 }
 ```
@@ -39,7 +39,7 @@ setContent {
     AppTheme {
         // Here
         NexusPortal {
-            ...
+            // ...
         }
     }
 }

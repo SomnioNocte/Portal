@@ -37,17 +37,3 @@ dependencies {
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.compose.ui:ui")
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "com.github.SomnioNocte"
-            artifactId = "portal"
-            version = "0.1.0"
-
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
-}
