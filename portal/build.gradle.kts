@@ -42,9 +42,9 @@ afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                groupId = "com.somnio_nocte"
-                artifactId = "portal"
-                version = "1.0.0"
+                groupId = "io.jitpack"
+                artifactId = "library"
+                version = "1.0"
 
                 from(components.getByName("release"))
             }
