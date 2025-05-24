@@ -1,5 +1,8 @@
 plugins {
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -8,14 +11,11 @@ android {
 
     defaultConfig {
         minSdk = 24
-
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -23,15 +23,31 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2025.05.01"))
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.runtime:runtime")
+    implementation("androidx.compose.ui:ui")
+}
 
-    implementation(libs.appcompat.v7)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.runner)
-    androidTestImplementation(libs.espresso.core)
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.github.somnio-nocte"
+            artifactId = "portal"
+            version = "0.0.1-alpha"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
