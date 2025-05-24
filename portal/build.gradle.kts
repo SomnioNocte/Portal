@@ -41,9 +41,9 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            groupId = "com.github.somnio-nocte"
+            groupId = "com.github.SomnioNocte"
             artifactId = "portal"
-            version = "0.0.1-alpha"
+            version = "0.1.0"
 
             afterEvaluate {
                 from(components["release"])
