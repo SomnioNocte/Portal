@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
  *
  * */
 @Composable
-public fun Portal(
+fun Portal(
     key: Any? = null,
     content: @Composable (transition: Transition<Boolean>) -> Unit
 ) {
@@ -78,7 +78,7 @@ private fun SubComposePortal(
 }
 
 @Composable
-public fun NexusPortal(
+fun NexusPortal(
     content: @Composable BoxScope.() -> Unit
 ) {
     val nexusPortal = remember { INexusPortal() }
@@ -118,10 +118,10 @@ public fun NexusPortal(
     }
 }
 
-public val LocalNexusPortal = staticCompositionLocalOf<INexusPortal> { error("Nexus Portal not initialized yet") }
+val LocalNexusPortal = staticCompositionLocalOf<INexusPortal> { error("Nexus Portal not initialized yet") }
 
 @Immutable
-public class INexusPortal {
+class INexusPortal {
     @Stable
     internal data class IPortal(
         val key: Any,

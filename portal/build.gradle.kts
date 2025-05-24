@@ -15,7 +15,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,4 +42,17 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.compose.ui:ui")
+}
+
+afterEvaluate{
+    publishing{
+        publications{
+            create<MavenPublication>("release") {
+                groupId = "com.github.somnio_nocte"
+                artifactId = "portal"
+                version = "0.0.1"
+                from(components["release"])
+            }
+        }
+    }
 }

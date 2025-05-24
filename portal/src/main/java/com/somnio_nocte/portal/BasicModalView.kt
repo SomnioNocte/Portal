@@ -30,7 +30,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 
 @Composable
-public fun BasicModalView(
+fun BasicModalView(
     onCloseRequest: () -> Unit,
     modifier: Modifier = Modifier,
     key: Any? = null,
